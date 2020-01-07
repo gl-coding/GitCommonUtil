@@ -1,18 +1,4 @@
 
-function getDirFiles(){
-    for file in $1/*
-    do
-        if test -f $file
-        then
-            echo $file
-        else
-            getDirFiles $file
-        fi
-    done
-}
-
-#getDirFiles $1
-
 function fileScan(){
     #sed 
     cat $1 | awk '/([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})/{print $0}'
@@ -30,6 +16,7 @@ function gitAddFiles(){
                 echo "++++++++++++++++++++++"
                 echo $file
                 fileScan $file
+                #git add $file
             fi
         else
             gitAddFiles $file
@@ -44,34 +31,3 @@ function gitCommitFiles(){
     git commit -m $2
     git push origin master
 }
-
-function getDirs(){
-    echo $1
-    for file in $1/*
-    do
-        if test -f $file
-        then
-            #echo $file
-            arr=(${arr[*]} $file)
-        else
-            getDirs $file
-        fi
-    done
-}
-
-#getDirs $1
-
-function getDirsAndFiles(){
-    echo $1
-    for file in $1/*
-    do
-        if test -f $file
-        then
-            echo $file
-        else
-            getDirsAndFiles $file
-        fi
-    done
-}
-
-#getDirsAndFiles $1
